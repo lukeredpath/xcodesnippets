@@ -1,0 +1,1 @@
+xcodesnippets - a gem for managing Xcode 4 snippet libraries.
