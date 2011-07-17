@@ -20,3 +20,9 @@ Feature: Installing snippets
     Then the snippet files should be installed to "tmp/snippets/Default.snippetbundle"
     And the installed snippet files should be symlinked inside "tmp/xcode-snippets"
   
+  Scenario: Uninstalling a snippet
+    Given I have installed the snippet file "tmp/example-snippet.codesnippet"
+    When I run xcodesnippets with "uninstall example-snippet"
+    Then the snippet file "tmp/snippets/Default.snippetbundle/example-snippet.codesnippet" should not exist
+    And it's symlink should be removed
+    

@@ -31,5 +31,11 @@ module XcodeSnippets
       @snippets << snippet
       snippet
     end
+    
+    def snippet_named(name)
+      name += ".codesnippet" if name !~ /\.codesnippet$/
+      snippet = Snippet.new(self, File.join(path, name))
+      snippet.exists? ? snippet : nil
+    end
   end
 end

@@ -7,9 +7,13 @@ module XcodeSnippets
       @path = path
     end
     
-    def activate!(uuid, xcode_snippets_path)
+    def activate(uuid, xcode_snippets_path)
       @symlinked_path = File.join(xcode_snippets_path, "#{uuid}.codesnippet")
       FileUtils.symlink(path, @symlinked_path)
+    end
+    
+    def uninstall
+      FileUtils.rm_f(path)
     end
     
     def name
@@ -18,6 +22,10 @@ module XcodeSnippets
     
     def key
       "#{@bundle.name}/#{name}"
+    end
+    
+    def exists?
+      File.exist?(path)
     end
   end
 end

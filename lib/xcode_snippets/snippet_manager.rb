@@ -15,8 +15,8 @@ module XcodeSnippets
     end
     
     def install_snippet(path_to_snippet, update_manifest = true)
-      snippet = Bundle.default(@snippets_install_path).add_snippet_from_file(path_to_snippet)
-      snippet.activate!(generate_uuid, @xcode_snippets_path)
+      snippet = default_bundle.add_snippet_from_file(path_to_snippet)
+      snippet.activate(generate_uuid, @xcode_snippets_path)
       manifest.add_snippet!(snippet) if update_manifest
       snippet
     end
@@ -29,6 +29,13 @@ module XcodeSnippets
       manifest.save
     end
     
+    def uninstall_snippet(snippet_name)
+      if snippet = default_bundle.snippet_named(snippet_name)
+        snippet.uninstall
+        manifest.remove_snippet!(snippet)
+      end
+    end
+    
     def save_manifest
       manifest.save
     end
@@ -37,6 +44,10 @@ module XcodeSnippets
     
     def generate_uuid
       @uuid_generator.generate
+    end
+    
+    def default_bundle
+      Bundle.default(@snippets_install_path)
     end
     
     class UUIDGenerator

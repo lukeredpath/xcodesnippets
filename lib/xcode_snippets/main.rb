@@ -12,6 +12,14 @@ module XcodeSnippets
       end
     end
     
+    subcommand "uninstall", "Uninstall a snippet or snippet bundle" do
+      parameter "NAME", "Name of the installed snippet"
+      
+      def execute
+        manager.uninstall_snippet(name)
+      end
+    end
+    
     private
     
     def manager

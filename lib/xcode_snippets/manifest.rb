@@ -20,6 +20,15 @@ module XcodeSnippets
       save
     end
     
+    def remove_snippet(snippet)
+      @data.delete(snippet.key)
+    end
+    
+    def remove_snippet!(snippet)
+      remove_snippet(snippet)
+      save
+    end
+    
     def has_snippet?(snippet)
       @data[snippet.key] && @data[snippet.key] == snippet.symlinked_path
     end
@@ -32,6 +41,10 @@ module XcodeSnippets
     
     def load
       @data = Plist.parse_xml(path) || {}
+    end
+    
+    def symlink_for_snippet(snippet)
+      @data[snippet.key]
     end
     
     private
