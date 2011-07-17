@@ -1,1 +1,33 @@
-xcodesnippets - a gem for managing Xcode 4 snippet libraries.
+# xcodesnippets - a utility for managing Xcode 4 snippet libraries.
+
+Xcode 4 introduced code snippets; small, re-usable chunks of code that could be inserted using Xcode's native auto-completion system. 
+
+The problem is, Xcode does little to nothing to help you manage these snippets. There isn't an easy way of sharing them or managing them. `xcodesnippets` aims to make snippets a little bit more manageable, and sharable through the concept of snippet bundles.
+
+My hope is that one day that this utility becomes obsolete and Xcode itself has better support for managing snippets, including organisation into folders and native installation/activation/deactivation of snippet bundles. To that end, I have [filed a bug](http://openradar.appspot.com/radar?id=1214402) (rdar://9587558) which I encourage you to dupe if you feel this would be beneficial.
+
+## Getting started
+
+`xcodesnippets` is written in Ruby and distributed as a Ruby gem. Most Macs with development tools installed come with a usable version of Ruby and RubyGems although to date, this gem has only been tested against Ruby 1.9.2. If you have a problem, please [file a bug](https://github.com/lukeredpath/xcodesnippets/issues).
+
+If you aren't familiar with RubyGems, fire up a Terminal and run the following command:
+
+    $ sudo gem install xcodesnippets
+    
+If you are using a tool like [RVM](https://rvm.beginrescueend.com/), the `sudo` will probably be unnecessary.
+
+## Installing a code snippet
+
+Code snippets are distributed as property list files with a `.codesnippet` extension. If you have created any custom code snippets in Xcode 4, you will find them in your home directory, under `~/Library/Developer/Xcode/UserData/CodeSnippets/`. The files are named using GUIDs. Any `codesnippet` file created from within Xcode 4, or manually if you are comfortable editing the files yourself (they are just plists) are installable using `xcodesnippets`.
+
+To install a snippet, run the following from the terminal:
+
+    $ xcodesnippets install [path-to-snippet-file]
+    
+For a full list of commands and options, run `xcodesnippets --help`.
+    
+## How xcodesnippets works
+
+`xcodesnippets` stores all of it's snippets inside snippet bundles. Snippet bundles are simply a directory/package with a `.snippetbundle` extension. When creating and sharing snippets, you are encouraged to give them a suitable name that indicates what the snippet does, rather than using the GUID naming scheme that Xcode uses.
+
+`xcodesnippets` installs all of it's snippets into `~/Library/Developer/Xcode/UserData/ManagedCodeSnippets`. Standalone snippets are stored in a default snippet bundle. Snippets are then symlinked from their installed location to the Xcode code snippets directory with an appropriate GUID, ensuring that they appear in Xcode (you may need to close your current project or workspace before installed snippets appear).
