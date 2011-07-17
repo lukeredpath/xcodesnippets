@@ -2,12 +2,12 @@ require 'ostruct'
 
 Given /^Xcode snippets are stored in "([^"]*)"$/ do |path|
   FileUtils.mkdir_p(path)
-  configuration.xcode_snippet_path = path
+  XcodeSnippets.xcode_snippets_path = File.expand_path(path)
 end
 
 Given /^installed snippets are stored in "([^"]*)"$/ do |path|
   FileUtils.mkdir_p(path)
-  configuration.installed_snippet_path = path
+  XcodeSnippets.installation_path = File.expand_path(path)
 end
 
 Given /^I have the snippet file "([^"]*)"$/ do |path|
@@ -16,20 +16,20 @@ Given /^I have the snippet file "([^"]*)"$/ do |path|
   end
 end
 
-When /^I run "([^"]*)"$/ do |command|
+When /^I run xcodesnippets with "([^"]*)"$/ do |command|
   XcodeSnippets::Runner.run(command)
 end
 
 Then /^the snippet file should be installed to "([^"]*)"$/ do |path|
-  configuration.last_installed_snippet = path
   File.exists?(path).should be_true
+  configuration.last_installed_snippet = path
 end
 
-Then /^the installed snippet file should be symlinked insite "([^"]*)"$/ do |dir|
-  file = Dir["#{dir}/*.codesnippet"].find do |snippet|
+Then /^the installed snippet file should be symlinked inside "([^"]*)"$/ do |dir|
+  file = Dir["#{dir}/**/*.codesnippet"].find do |snippet|
     File.read(snippet) == File.read(configuration.last_installed_snippet)
   end
   
   file.should_not be_nil
-  file.should be_symlink
+  File.symlink?(file).should be_true
 end
