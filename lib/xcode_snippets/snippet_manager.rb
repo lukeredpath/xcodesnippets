@@ -14,11 +14,19 @@ module XcodeSnippets
       @manifest = Manifest.load(snippets_install_path)
     end
     
-    def install_snippet(path_to_snippet)
+    def install_snippet(path_to_snippet, update_manifest = true)
       snippet = Bundle.default(@snippets_install_path).add_snippet_from_file(path_to_snippet)
       snippet.activate!(generate_uuid, @xcode_snippets_path)
-      manifest.add_snippet!(snippet)
+      manifest.add_snippet!(snippet) if update_manifest
       snippet
+    end
+    
+    def install_snippets(snippet_path_list)
+      snippet_path_list.each do |path_to_snippet|
+        snippet = install_snippet(path_to_snippet, false)
+        manifest.add_snippet(snippet)
+      end
+      manifest.save
     end
     
     def save_manifest

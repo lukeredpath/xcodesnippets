@@ -8,9 +8,7 @@ module XcodeSnippets
       parameter "FILE ...", "Path to code snippet to install"
       
       def execute
-        file_list.each do |file|
-          manager.install_snippet(file)
-        end
+        manager.install_snippets(file_list)
       end
     end
     

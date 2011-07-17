@@ -11,8 +11,12 @@ module XcodeSnippets
       new(path).tap { |manifest| manifest.load }
     end
     
-    def add_snippet!(snippet)
+    def add_snippet(snippet)
       @data[snippet.key] = snippet.symlinked_path
+    end
+    
+    def add_snippet!(snippet)
+      add_snippet(snippet)
       save
     end
     
