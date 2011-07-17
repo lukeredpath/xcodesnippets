@@ -1,4 +1,5 @@
 require 'uuidtools'
+require 'plist'
 
 module XcodeSnippets
   class SnippetManager
@@ -9,7 +10,7 @@ module XcodeSnippets
       @snippets_install_path = snippets_install_path
       @uuid_generator = uuid_generator
       @xcode_snippets_path = XcodeSnippets::DEFAULT_XCODE_SNIPPETS_PATH
-      @manifest = {}
+      @manifest = load_manifest_from_disk || {}
     end
     
     def install_snippet(path_to_snippet)
@@ -21,12 +22,29 @@ module XcodeSnippets
       symlinked_path = File.join(xcode_snippets_path, "#{generate_uuid}.codesnippet")
       FileUtils.symlink(installed_path, symlinked_path)
       @manifest["Default.snippetbundle/#{snippet_file_name}"] = symlinked_path
+      save_manifest_to_disk
+    end
+    
+    def save_manifest_to_disk
+      File.open(File.join(@snippets_install_path, "Manifest.plist"), "w") do |io|
+        io.write manifest.to_plist
+      end
     end
     
     private
     
     def generate_uuid
       @uuid_generator.generate
+    end
+    
+    def load_manifest_from_disk
+      manifest_path = File.join(@snippets_install_path, "Manifest.plist")
+      
+      if File.exist?(manifest_path)
+        Plist.parse_xml(manifest_path)
+      else
+        nil
+      end
     end
   end
   

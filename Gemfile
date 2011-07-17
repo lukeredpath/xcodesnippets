@@ -2,6 +2,7 @@ source :rubygems
 
 gem "clamp"
 gem "uuidtools"
+gem "plist"
 
 group :development do
   gem "rspec"
