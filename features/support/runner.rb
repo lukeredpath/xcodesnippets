@@ -1,9 +1,11 @@
 module XcodeSnippets
   class Runner
     def self.run(command)
+      return_value = nil
+      
       thread = Thread.fork do
         # Clamp::Command.run expects ARGV-style arguments
-        XcodeSnippets::Main.run("xcodesnippets", command.split(" "))
+        return_value = XcodeSnippets::Main.run("xcodesnippets", command.split(" "))
       end
       
       # need to wait until the thread has finished otherwise we
@@ -11,6 +13,8 @@ module XcodeSnippets
       # while a previous one has not finished
       while thread.alive?
       end
+      
+      return_value
     end
   end
 end

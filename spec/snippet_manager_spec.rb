@@ -44,6 +44,20 @@ describe "SnippetManager" do
     
   end
   
+  describe "#install_snippets" do
+    
+    before do
+      snippet_path = File.join(FIXTURES_PATH, "example.codesnippet")
+      @snippets = @manager.install_snippets([snippet_path])
+    end
+    
+    it "returns an array of all installed snippets" do
+      @snippets.should have(1).item
+      @snippets.first.should exist
+    end
+    
+  end
+  
   describe "#uninstall_snippet" do
     
     before do

@@ -20,8 +20,7 @@ Given /^I have the snippet file "([^"]*)"$/ do |path|
 end
 
 Given /^I have installed the snippet file "([^"]*)"$/ do |path|
-  XcodeSnippets::Runner.run("install #{path}")
-  configuration.last_installed_snippets = [path]
+  configuration.installed_snippet = XcodeSnippets::Runner.run("install #{path}").first
 end
 
 When /^I run xcodesnippets with "([^"]*)"$/ do |command|
@@ -62,9 +61,5 @@ Then /^the snippet file "([^"]*)" should not exist$/ do |path|
 end
 
 Then /^it's symlink should be removed$/ do
-  # file = Dir["#{XcodeSnippets.xcode_snippets_path}/**/*.codesnippet"].find do |snippet|
-  #   File.read(snippet) == File.read(configuration.uninstalled_snippet)
-  # end
-  # 
-  # file.should be_nil
+  File.exist?(configuration.installed_snippet.symlinked_path).should be_false
 end

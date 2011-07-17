@@ -22,11 +22,13 @@ module XcodeSnippets
     end
     
     def install_snippets(snippet_path_list)
-      snippet_path_list.each do |path_to_snippet|
+      snippets = snippet_path_list.map do |path_to_snippet|
         snippet = install_snippet(path_to_snippet, false)
         manifest.add_snippet(snippet)
+        snippet
       end
       manifest.save
+      snippets
     end
     
     def uninstall_snippet(snippet_name)
