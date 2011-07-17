@@ -5,10 +5,12 @@ module XcodeSnippets
   class Main < Clamp::Command
 
     subcommand "install", "Install a snippet or snippet bundle" do
-      parameter "FILE", "Path to code snippet to install"
+      parameter "FILE ...", "Path to code snippet to install"
       
       def execute
-        manager.install_snippet(file)
+        file_list.each do |file|
+          manager.install_snippet(file)
+        end
       end
     end
     
