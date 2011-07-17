@@ -38,11 +38,11 @@ module XcodeSnippets
     def generate_uuid
       @uuid_generator.generate
     end
-  end
-  
-  class UUIDGenerator
-    def self.generate
-      UUIDTools::UUID.random_create.to_s.upcase
+    
+    class UUIDGenerator
+      def self.generate
+        UUIDTools::UUID.random_create.to_s.upcase
+      end
     end
   end
 end
