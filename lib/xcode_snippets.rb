@@ -1,5 +1,6 @@
 $:.unshift(File.dirname(__FILE__))
 
+require 'fileutils'
 require 'xcode_snippets/main'
 
 module XcodeSnippets
