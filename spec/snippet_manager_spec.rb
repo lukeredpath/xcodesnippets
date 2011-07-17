@@ -25,6 +25,11 @@ describe "SnippetManager" do
       File.symlink?(expected_path).should be_true
     end
     
+    it "updates it's manifest of installed and activated files" do
+      xcode_snippet_path = File.join(XCODE_SNIPPET_PATH, "#{FakeUUIDGenerator.generate}.codesnippet")
+      @manager.manifest.should include("Default.snippetbundle/example.codesnippet" => xcode_snippet_path)
+    end
+    
   end
   
 end
