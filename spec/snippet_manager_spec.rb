@@ -8,23 +8,23 @@ describe "SnippetManager" do
   end
   
   it "saves it's manifest to disk" do
-    @manager.save_manifest_to_disk
+    @manager.save_manifest
     File.exist?(File.join(SNIPPETS_PATH, "Manifest.plist")).should be_true
   end
   
   it "loads its manifest from disk on creation" do
     snippet_path = File.join(FIXTURES_PATH, "example.codesnippet")
     xcode_snippet_path = File.join(XCODE_SNIPPET_PATH, "#{FakeUUIDGenerator.generate}.codesnippet")
-    @manager.install_snippet(snippet_path)
+    snippet = @manager.install_snippet(snippet_path)
     new_manager = XcodeSnippets::SnippetManager.new(SNIPPETS_PATH, FakeUUIDGenerator)
-    new_manager.manifest.should include("Default.snippetbundle/example.codesnippet" => xcode_snippet_path)
+    new_manager.manifest.should have_snippet(snippet)
   end
 
   context "#install_snippet" do
     
     before do
       snippet_path = File.join(FIXTURES_PATH, "example.codesnippet")
-      @manager.install_snippet(snippet_path)
+      @snippet = @manager.install_snippet(snippet_path)
     end
     
     it "copies the specified snippet file to it's snippets dir in the default bundle" do
@@ -40,7 +40,7 @@ describe "SnippetManager" do
     
     it "updates it's manifest of installed and activated files" do
       xcode_snippet_path = File.join(XCODE_SNIPPET_PATH, "#{FakeUUIDGenerator.generate}.codesnippet")
-      @manager.manifest.should include("Default.snippetbundle/example.codesnippet" => xcode_snippet_path)
+      @manager.manifest.should have_snippet(@snippet)
     end
     
   end
