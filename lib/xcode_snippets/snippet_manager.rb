@@ -1,5 +1,6 @@
 require 'uuidtools'
 require 'plist'
+require 'xcode_snippets/bundle'
 
 module XcodeSnippets
   class SnippetManager
@@ -14,15 +15,9 @@ module XcodeSnippets
     end
     
     def install_snippet(path_to_snippet)
-      default_bundle_path = File.join(@snippets_install_path, "Default.snippetbundle")
-      FileUtils.mkdir_p(default_bundle_path)
-      FileUtils.cp(path_to_snippet, default_bundle_path)
-      snippet_file_name = File.basename(path_to_snippet)
-      installed_path = File.join(default_bundle_path, snippet_file_name)
-      symlinked_path = File.join(xcode_snippets_path, "#{generate_uuid}.codesnippet")
-      FileUtils.symlink(installed_path, symlinked_path)
-      @manifest["Default.snippetbundle/#{snippet_file_name}"] = symlinked_path
-      save_manifest_to_disk
+      snippet = Bundle.default(@snippets_install_path).add_snippet_from_file(path_to_snippet)
+      snippet.activate!(generate_uuid, @xcode_snippets_path)
+      update_manifest(snippet.key, snippet.symlinked_path)
     end
     
     def save_manifest_to_disk
@@ -32,6 +27,11 @@ module XcodeSnippets
     end
     
     private
+    
+    def update_manifest(key, value)
+      @manifest[key] = value
+      save_manifest_to_disk
+    end
     
     def generate_uuid
       @uuid_generator.generate
