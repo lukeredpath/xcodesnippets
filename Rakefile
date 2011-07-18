@@ -1,5 +1,6 @@
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
+require File.join(File.dirname(__FILE__), *%w[lib xcode_snippets/version])
 
 Cucumber::Rake::Task.new(:features)
 
@@ -21,7 +22,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "xcodesnippets"
-  s.version           = "0.1.0"
+  s.version           = XcodeSnippets::Version.to_s
   s.summary           = "A command-line utility for managing Xcode 4 code snippets"
   s.author            = "Luke Redpath"
   s.email             = "luke@lukeredpath.co.uk"

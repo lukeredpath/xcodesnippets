@@ -2,6 +2,7 @@ $:.unshift(File.dirname(__FILE__))
 
 require 'fileutils'
 require 'xcode_snippets/main'
+require 'xcode_snippets/version'
 
 module XcodeSnippets
   DEFAULT_INSTALLATION_PATH   = File.expand_path("~/Library/Developer/Xcode/UserData/ManagedCodeSnippets")

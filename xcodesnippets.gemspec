@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xcodesnippets}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Luke Redpath"]
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{luke@lukeredpath.co.uk}
   s.executables = ["xcodesnippets"]
   s.extra_rdoc_files = ["README.md"]
-  s.files = ["LICENSE", "README.md", "bin/xcodesnippets", "spec/bundle_spec.rb", "spec/snippet_manager_spec.rb", "spec/spec_helper.rb", "lib/xcode_snippets", "lib/xcode_snippets/bundle.rb", "lib/xcode_snippets/main.rb", "lib/xcode_snippets/manifest.rb", "lib/xcode_snippets/snippet.rb", "lib/xcode_snippets/snippet_manager.rb", "lib/xcode_snippets.rb"]
+  s.files = ["LICENSE", "README.md", "bin/xcodesnippets", "spec/bundle_spec.rb", "spec/migrator_spec.rb", "spec/snippet_manager_spec.rb", "spec/spec_helper.rb", "lib/xcode_snippets/bundle.rb", "lib/xcode_snippets/main.rb", "lib/xcode_snippets/manifest.rb", "lib/xcode_snippets/migrator.rb", "lib/xcode_snippets/snippet.rb", "lib/xcode_snippets/snippet_manager.rb", "lib/xcode_snippets/version.rb", "lib/xcode_snippets.rb"]
   s.homepage = %q{http://lukeredpath.co.uk}
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
