@@ -19,6 +19,20 @@ Given /^I have the snippet file "([^"]*)"$/ do |path|
   end
 end
 
+Given /^I have the snippet bundle "([^"]*)"$/ do |path|
+  configuration.bundles ||= []
+  configuration.bundles << path
+  FileUtils.mkdir_p(path)
+end
+
+Given /^the bundle contains the snippet "([^"]*)"$/ do |snippet_name|
+  current_bundle = configuration.bundles.last
+  
+  File.open(File.join(current_bundle, snippet_name), "w") do |io|
+    io.write File.read(File.join(File.dirname(__FILE__), *%w[.. support fixtures example.codesnippet]))
+  end
+end
+
 Given /^I have installed the snippet file "([^"]*)"$/ do |path|
   configuration.installed_snippet = XcodeSnippets::Runner.run("install #{path}").first
 end
@@ -61,5 +75,5 @@ Then /^the snippet file "([^"]*)" should not exist$/ do |path|
 end
 
 Then /^it's symlink should be removed$/ do
-  File.exist?(configuration.installed_snippet.symlinked_path).should be_false
+  File.exist?(configuration.installed_snippet.symlink).should be_false
 end

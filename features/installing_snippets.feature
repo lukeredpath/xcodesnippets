@@ -5,7 +5,7 @@ Feature: Installing snippets
   
   Background:
     Given Xcode snippets are stored in "tmp/xcode-snippets"
-    And installed snippets are stored in "tmp/snippets"
+      And installed snippets are stored in "tmp/snippets"
   
   Scenario: Installing a single snippet
     Given I have the snippet file "tmp/example-snippet.codesnippet"
@@ -15,7 +15,7 @@ Feature: Installing snippets
   
   Scenario: Installing multiple snippets
     Given I have the snippet file "tmp/example-snippet-one.codesnippet"
-    And I have the snippet file "tmp/example-snippet-two.codesnippet"
+      And I have the snippet file "tmp/example-snippet-two.codesnippet"
     When I run xcodesnippets with "install tmp/example-snippet-one.codesnippet tmp/example-snippet-two.codesnippet"
     Then the snippet files should be installed to "tmp/snippets/Default.snippetbundle"
     And the installed snippet files should be symlinked inside "tmp/xcode-snippets"

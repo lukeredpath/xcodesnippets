@@ -1,6 +1,7 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
 
 require 'rspec'
+require 'ruby-debug'
 require 'xcode_snippets'
 
 RSpec.configure do |config|
@@ -15,12 +16,12 @@ XCODE_SNIPPET_PATH = File.join(TMP_PATH, "xcode-snippets")
 SNIPPETS_PATH      = File.join(TMP_PATH, "snippets")
 
 class FakeUUIDGenerator
-  def self.use=(uuid)
-    @uuid = uuid
+  def self.seed(uuids)
+    @uuids = uuids
   end
   
   def self.generate
-    @uuid
+    @uuids.pop
   end
 end
 
@@ -29,5 +30,9 @@ def setup_testing_environment!
     FileUtils.rm_rf(dir) && FileUtils.mkdir_p(dir)
   end
   
-  FakeUUIDGenerator.use = UUIDTools::UUID.timestamp_create
+  # seed the generator with enough UUIDs for testing
+  FakeUUIDGenerator.seed [
+    UUIDTools::UUID.timestamp_create,
+    UUIDTools::UUID.timestamp_create
+  ]
 end

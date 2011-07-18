@@ -1,15 +1,25 @@
 module XcodeSnippets
   class Snippet
-    attr_reader :path, :symlinked_path
+    attr_reader :path, :symlink
     
-    def initialize(bundle, path)
-      @bundle = bundle
+    def initialize(path, bundle = nil)
       @path = path
+      @bundle = bundle
     end
     
-    def activate(uuid, xcode_snippets_path)
-      @symlinked_path = File.join(xcode_snippets_path, "#{uuid}.codesnippet")
-      FileUtils.symlink(path, @symlinked_path)
+    def copy_to_bundle(bundle)
+      FileUtils.cp(path, bundle.path)
+      self.class.new(File.join(bundle.path, name), bundle)
+    end
+    
+    def activate(manifest)
+      @symlink = manifest.generate_new_symlink
+      FileUtils.symlink(path, symlink)
+      manifest.add_snippet(self)
+    end
+    
+    def deactivate(manifest)
+      manifest.remove_snippet(self)
     end
     
     def uninstall
@@ -21,7 +31,7 @@ module XcodeSnippets
     end
     
     def key
-      "#{@bundle.name}/#{name}"
+      @bundle ? "#{@bundle.name}/#{name}" : name
     end
     
     def exists?
