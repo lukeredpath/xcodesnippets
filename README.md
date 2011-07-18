@@ -51,6 +51,7 @@ For a full list of commands and options, run `xcodesnippets --help`.
 ## TODO
 
 * Installing snippets and bundles directly from a URL
+* Activating snippets from outside the managed directory - great for using your own snippets from their local source repos.
 * Generating snippet bundles from a folder of snippets ready for distribution
 * Commands for listing installed bundles and their contents
 * Commands for activating and de-activating individual bundles/snippets
