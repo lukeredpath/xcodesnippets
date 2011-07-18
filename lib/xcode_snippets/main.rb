@@ -56,7 +56,10 @@ Warning: this will move #{snippets_to_migrate.count} code snippets under xcodesn
 
 Continue? (y/n)
 }
-        agree(prompt) unless skip_confirm?
+        if skip_confirm?
+          return true
+        end
+        agree(prompt)
       end
     end
     
