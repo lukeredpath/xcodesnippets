@@ -7,13 +7,18 @@ module XcodeSnippets
       @bundle = bundle
     end
     
+    def set_guid!(new_guid)
+      metadata.guid = new_guid
+      metadata.save_to(path)
+    end
+    
     def copy_to_bundle(bundle)
       FileUtils.cp(path, bundle.path)
       self.class.new(File.join(bundle.path, name), bundle)
     end
     
     def activate(manifest)
-      @symlink = manifest.generate_new_symlink
+      @symlink = manifest.generate_symlink_for_snippet(self)
       FileUtils.symlink(path, symlink)
       manifest.add_snippet(self)
     end
@@ -28,6 +33,10 @@ module XcodeSnippets
     
     def name
       File.basename(@path)
+    end
+    
+    def guid
+      metadata.guid
     end
     
     def metadata
@@ -58,6 +67,20 @@ module XcodeSnippets
       
       def title
         @data["IDECodeSnippetTitle"]
+      end
+      
+      def guid
+        @data["IDECodeSnippetIdentifier"]
+      end
+      
+      def guid=(new_guid)
+        @data["IDECodeSnippetIdentifier"] = new_guid
+      end
+      
+      def save_to(path)
+        File.open(path, "w") do |io|
+          io.write @data.to_plist
+        end
       end
     end
   end

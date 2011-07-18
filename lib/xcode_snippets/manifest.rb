@@ -51,8 +51,13 @@ module XcodeSnippets
       @data[snippet.key]
     end
     
-    def generate_new_symlink
-      File.join(@xcode_snippets_install_path, "#{@uuid_generator.generate}.codesnippet")
+    def generate_symlink_for_snippet(snippet)
+      snippet.set_guid!(generate_guid)
+      File.join(@xcode_snippets_install_path, "#{snippet.guid}.codesnippet")
+    end
+    
+    def generate_guid
+      @uuid_generator.generate
     end
     
     private

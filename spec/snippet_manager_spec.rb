@@ -24,13 +24,21 @@ describe "SnippetManager" do
       File.exist?(expected_path).should be_true
     end
     
-    it "creates a GUID symlink to the installed snippet in the Xcode snippets directory" do
+    it "generates a new GUID identifier for the snippet" do
+      @snippet.guid.should_not be_nil
+    end
+    
+    it "creates a symlink to the installed snippet in the Xcode snippets directory based on the snippet's generated GUID" do
       symlink = @manager.manifest.symlink_for_snippet(@snippet)
       File.exist?(symlink).should be_true
     end
     
     it "updates it's manifest of installed and activated files" do
       @manager.manifest.should have_snippet(@snippet)
+    end
+    
+    it "updates the snippet's metadata to reflect it's generated GUID" do
+      @snippet.metadata.guid.should == @snippet.guid
     end
     
   end
