@@ -3,6 +3,7 @@ PATH
   specs:
     xcodesnippets (0.2.0)
       clamp (~> 0.2.1)
+      highline (~> 1.6.2)
       plist (~> 3.1.0)
       uuidtools (~> 2.1.2)
 
@@ -53,7 +54,6 @@ PLATFORMS
 
 DEPENDENCIES
   cucumber
-  highline (~> 1.6.2)
   rspec
   ruby-debug19
   xcodesnippets!

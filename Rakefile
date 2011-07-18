@@ -42,12 +42,12 @@ spec = Gem::Specification.new do |s|
   s.add_dependency("clamp",     "~> 0.2.1")
   s.add_dependency("uuidtools", "~> 2.1.2")
   s.add_dependency("plist",     "~> 3.1.0")
+  s.add_dependency("highline",  "~> 1.6.2")
 
   # If your tests use any gems, include them here
   s.add_development_dependency("rspec")
   s.add_development_dependency("cucumber")
   s.add_development_dependency("ruby-debug19")
-  s.add_development_dependency("highline")
 end
 
 # This task actually builds the gem. We also regenerate a static
@@ -65,6 +65,11 @@ desc "Build the gemspec file #{spec.name}.gemspec"
 task :gemspec do
   file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
   File.open(file, "w") {|f| f << spec.to_ruby }
+end
+
+desc "Update bundled gems"
+task :bundle => :gemspec do
+  system "bundle"
 end
 
 # If you don't want to generate the .gemspec file, just remove this line. Reasons
