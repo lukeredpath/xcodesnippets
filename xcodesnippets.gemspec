@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<highline>, [">= 0"])
     else
       s.add_dependency(%q<clamp>, ["~> 0.2.1"])
       s.add_dependency(%q<uuidtools>, ["~> 2.1.2"])
@@ -35,6 +36,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<highline>, [">= 0"])
     end
   else
     s.add_dependency(%q<clamp>, ["~> 0.2.1"])
@@ -43,5 +45,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<highline>, [">= 0"])
   end
 end

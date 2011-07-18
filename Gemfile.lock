@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xcodesnippets (0.1.0)
+    xcodesnippets (0.2.0)
       clamp (~> 0.2.1)
       plist (~> 3.1.0)
       uuidtools (~> 2.1.2)
@@ -22,6 +22,7 @@ GEM
     diff-lcs (1.1.2)
     gherkin (2.4.5)
       json (>= 1.4.6)
+    highline (1.6.2)
     json (1.5.3)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -52,6 +53,7 @@ PLATFORMS
 
 DEPENDENCIES
   cucumber
+  highline (~> 1.6.2)
   rspec
   ruby-debug19
   xcodesnippets!
