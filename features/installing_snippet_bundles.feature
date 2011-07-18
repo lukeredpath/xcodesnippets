@@ -13,3 +13,10 @@ Feature: Installing snippet bundles
       When I run xcodesnippets with "install-bundle tmp/SampleSnippets.snippetbundle"
       Then the snippet file should be installed to "tmp/snippets/SampleSnippets.snippetbundle/example-snippet.codesnippet"
       And the installed snippet files should be symlinked inside "tmp/xcode-snippets"
+
+    Scenario: Uninstalling a snippet bundle
+      Given I have installed the snippet bundle "tmp/SampleSnippets.snippetbundle"
+      When I run xcodesnippets with "uninstall-bundle SampleSnippets"
+      Then the snippet bundle should not exist
+      And all of the bundle snippet symlinks should be removed
+      

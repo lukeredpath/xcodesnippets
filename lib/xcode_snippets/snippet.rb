@@ -22,7 +22,7 @@ module XcodeSnippets
       manifest.remove_snippet(self)
     end
     
-    def uninstall
+    def delete
       FileUtils.rm_f(path)
     end
     
@@ -36,6 +36,10 @@ module XcodeSnippets
     
     def exists?
       File.exist?(path)
+    end
+    
+    def symlinked?
+      symlink && File.exist?(symlink)
     end
   end
 end

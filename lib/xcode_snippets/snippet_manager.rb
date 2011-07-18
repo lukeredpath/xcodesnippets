@@ -35,16 +35,27 @@ module XcodeSnippets
     
     def uninstall_snippet_named(snippet_name)
       if snippet = default_bundle.snippet_named(snippet_name)
-        snippet.deactivate(manifest)
-        snippet.uninstall
-        save_manifest
+        uninstall_snippet(snippet)
       end
+    end
+    
+    def uninstall_snippet(snippet)
+      snippet.deactivate(manifest)
+      snippet.delete
+      save_manifest
     end
     
     def install_snippet_bundle(path_to_bundle)
       Bundle.new(path_to_bundle).copy_to(manifest.snippets_install_path).tap do |bundle|
         install_snippets(bundle.snippets)
       end
+    end
+    
+    def uninstall_snippet_bundle_named(bundle_name)
+      bundle = Bundle.bundle_named(bundle_name, manifest.snippets_install_path)
+      bundle.snippets.each { |snippet| uninstall_snippet(snippet) }
+      bundle.delete
+      save_manifest
     end
     
     def save_manifest

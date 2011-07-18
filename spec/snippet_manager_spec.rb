@@ -104,4 +104,18 @@ describe "SnippetManager" do
     
   end
   
+  describe "#uninstall_snippet_bundle_named" do
+    
+    before do
+      bundle_path = File.join(FIXTURES_PATH, "Example.snippetbundle")      
+      @bundle = @manager.install_snippet_bundle(bundle_path)
+      @manager.uninstall_snippet_bundle_named("Example")
+    end
+    
+    it "removes the snippet bundle from the install path" do
+      @bundle.should_not exist
+    end
+    
+  end
+  
 end

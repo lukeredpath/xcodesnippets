@@ -11,12 +11,18 @@ module XcodeSnippets
     end
     
     class << self
-      def named(name, directory)
-        new("#{name}.snippetbundle").copy_to(directory)
+      def bundle_named(name, install_directory)
+        new(File.join(install_directory, "#{name}.snippetbundle"))
       end
     
       def default(directory)
-        named("Default", directory)
+        bundle = bundle_named("Default", directory)
+        
+        if bundle.exists?
+          bundle
+        else
+          bundle.copy_to(directory)
+        end
       end
     end
     
@@ -35,6 +41,10 @@ module XcodeSnippets
       File.basename(path)
     end
     
+    def exists?
+      File.exist?(path)
+    end
+    
     def add_copy_of_snippet_from_file(snippet_path)
       add_copy_of_snippet Snippet.new(snippet_path)
     end
@@ -47,6 +57,10 @@ module XcodeSnippets
     def add_copy_of_snippet(snippet)
       @snippets << snippet.copy_to_bundle(self)
       @snippets.last
+    end
+    
+    def delete
+      FileUtils.rm_rf(path)
     end
     
     def snippet_named(name)

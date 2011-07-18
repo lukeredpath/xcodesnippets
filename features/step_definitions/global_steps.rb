@@ -37,43 +37,65 @@ Given /^I have installed the snippet file "([^"]*)"$/ do |path|
   configuration.installed_snippet = XcodeSnippets::Runner.run("install #{path}").first
 end
 
+Given /^I have installed the snippet bundle "([^"]*)"$/ do |path|
+  configuration.installed_bundle = XcodeSnippets::Runner.run("install-bundle #{path}")
+end
+
 When /^I run xcodesnippets with "([^"]*)"$/ do |command|
-  XcodeSnippets::Runner.run(command)
+  configuration.last_result = XcodeSnippets::Runner.run(command)
 end
 
 Then /^the snippet file should be installed to "([^"]*)"$/ do |path|
-  File.exists?(path).should be_true
-  configuration.last_installed_snippets = [path]
+  if configuration.last_result.is_a?(XcodeSnippets::Bundle)
+    installed_snippet = configuration.last_result.snippets.first
+  else
+    installed_snippet = configuration.last_result.first
+  end
+  installed_snippet.path.should == File.expand_path(path)
+  installed_snippet.should exist
 end
 
 Then /^the snippet files should be installed to "([^"]*)"$/ do |root_path|
-  installed = []
-  
-  configuration.snippets.each do |snippet|
-    path = File.join(root_path, snippet)
-    File.exists?(path).should be_true
-    installed << path
+  if configuration.last_result.is_a?(XcodeSnippets::Bundle)
+    snippets = configuration.last_result.snippets
+  else
+    snippets = configuration.last_result
   end
   
-  configuration.last_installed_snippets = installed
+  snippets.each do |snippet|
+    expected_path = File.join(File.expand_path(root_path), snippet.name)
+    snippet.path.should == expected_path
+    snippet.should exist
+  end
 end
 
 Then /^the installed snippet files should be symlinked inside "([^"]*)"$/ do |dir|
-  configuration.last_installed_snippets.each do |installed_snippet|
-    file = Dir["#{dir}/**/*.codesnippet"].find do |snippet|
-      File.read(snippet) == File.read(installed_snippet)
-    end
+  if configuration.last_result.is_a?(XcodeSnippets::Bundle)
+    snippets = configuration.last_result.snippets
+  else
+    snippets = configuration.last_result
+  end
 
-    file.should_not be_nil
-    File.symlink?(file).should be_true
+  snippets.each do |snippet|
+    File.dirname(snippet.symlink).should == File.expand_path(dir)
+    snippet.should be_symlinked
   end
 end
 
 Then /^the snippet file "([^"]*)" should not exist$/ do |path|
   File.exist?(path).should be_false
-  configuration.uninstalled_snippet = path
 end
 
 Then /^it's symlink should be removed$/ do
-  File.exist?(configuration.installed_snippet.symlink).should be_false
+  configuration.installed_snippet.should_not be_symlinked
+end
+
+Then /^the snippet bundle should not exist$/ do
+  configuration.installed_bundle.should_not exist
+end
+
+Then /^all of the bundle snippet symlinks should be removed$/ do
+  configuration.installed_bundle.snippets.each do |snippet|
+    snippet.should_not be_symlinked
+  end
 end
