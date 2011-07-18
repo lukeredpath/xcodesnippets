@@ -11,7 +11,6 @@ task :default => [:spec, :features]
 
 require "rubygems"
 require "rubygems/package_task"
-require "rdoc/task"
 
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
@@ -39,11 +38,14 @@ spec = Gem::Specification.new do |s|
 
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
-  # s.add_dependency("some_other_gem", "~> 0.1.0")
+  s.add_dependency("clamp",     "~> 0.2.1")
+  s.add_dependency("uuidtools", "~> 2.1.2")
+  s.add_dependency("plist",     "~> 3.1.0")
 
   # If your tests use any gems, include them here
   s.add_development_dependency("rspec")
   s.add_development_dependency("cucumber")
+  s.add_development_dependency("ruby-debug19")
 end
 
 # This task actually builds the gem. We also regenerate a static
