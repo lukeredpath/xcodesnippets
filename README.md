@@ -24,6 +24,10 @@ To install a snippet, run the following from the terminal:
 
     $ xcodesnippets install [path-to-snippet-file]
     
+To install a bundle, run the following:
+
+    $ xcodesnippets install-bundle [path-to-snippet-bundle]
+    
 For a full list of commands and options, run `xcodesnippets --help`.
     
 ## How xcodesnippets works
@@ -31,3 +35,35 @@ For a full list of commands and options, run `xcodesnippets --help`.
 `xcodesnippets` stores all of it's snippets inside snippet bundles. Snippet bundles are simply a directory/package with a `.snippetbundle` extension. When creating and sharing snippets, you are encouraged to give them a suitable name that indicates what the snippet does, rather than using the GUID naming scheme that Xcode uses.
 
 `xcodesnippets` installs all of it's snippets into `~/Library/Developer/Xcode/UserData/ManagedCodeSnippets`. Standalone snippets are stored in a default snippet bundle. Snippets are then symlinked from their installed location to the Xcode code snippets directory with an appropriate GUID, ensuring that they appear in Xcode (you may need to close your current project or workspace before installed snippets appear).
+
+## TODO
+
+* Installing snippets and bundles directly from a URL
+* Generating snippet bundles from a folder of snippets ready for distribution
+* Commands for listing installed bundles and their contents
+* Commands for activating and de-activating individual bundles/snippets
+
+## License
+
+This project is licensed under the terms of the MIT license.
+
+Copyright (c) 2011 Luke Redpath
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
