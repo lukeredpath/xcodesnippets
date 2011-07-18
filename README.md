@@ -16,6 +16,18 @@ If you aren't familiar with RubyGems, fire up a Terminal and run the following c
     
 If you are using a tool like [RVM](https://rvm.beginrescueend.com/), the `sudo` will probably be unnecessary.
 
+## Migrating your existing snippets
+
+If you already have some snippets in `~/Library/Developer/Xcode/UserData/CodeSnippets/` you will want to bring these under `xcodesnippets` control before you do anything else.
+
+Fortunately, `xcodesnippets` will do this for you; not only that, but it will rename each snippet file to use a more meaningful title (the one you gave it within Xcode).
+
+To migrate your exiting snippets, run:
+
+    $ xcodesnippets migrate
+    
+A list of your existing snippets will be displayed and with your confirmation, they will be copied into the default `xcodesnippet` bundle, removed from the Xcode snippets directory, then re-linked back to the `xcodesnippet` versions (see "How xcodesnippets works" for more).
+
 ## Installing a code snippet
 
 Code snippets are distributed as property list files with a `.codesnippet` extension. If you have created any custom code snippets in Xcode 4, you will find them in your home directory, under `~/Library/Developer/Xcode/UserData/CodeSnippets/`. The files are named using GUIDs. Any `codesnippet` file created from within Xcode 4, or manually if you are comfortable editing the files yourself (they are just plists) are installable using `xcodesnippets`.
