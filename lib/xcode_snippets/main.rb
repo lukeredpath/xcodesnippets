@@ -36,6 +36,14 @@ module XcodeSnippets
       end
     end
     
+    subcommand "migrate", "Migrates existing Xcode snippets to a default bundle" do
+      option "--skip-confirm", :flag, "Skips confirmation before doing the migration"
+      
+      def execute
+        
+      end
+    end
+    
     private
     
     def manager
@@ -44,6 +52,10 @@ module XcodeSnippets
     
     def manifest
       Manifest.load(XcodeSnippets.installation_path, XcodeSnippets.xcode_snippets_path)
+    end
+    
+    def migrator
+      XcodeSnippets::Migrator.new(manager)
     end
 
   end

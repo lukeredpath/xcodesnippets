@@ -41,6 +41,12 @@ Given /^I have installed the snippet bundle "([^"]*)"$/ do |path|
   configuration.installed_bundle = XcodeSnippets::Runner.run("install-bundle #{path}")
 end
 
+Given /^I have the existing snippet "([^"]*)"$/ do |snippet_name|
+  File.open(File.join(XcodeSnippets.xcode_snippets_path, snippet_name), "w") do |io|
+    io.write File.read(File.join(File.dirname(__FILE__), *%w[.. support fixtures example.codesnippet]))
+  end
+end
+
 When /^I run xcodesnippets with "([^"]*)"$/ do |command|
   configuration.last_result = XcodeSnippets::Runner.run(command)
 end

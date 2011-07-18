@@ -20,7 +20,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string>Documentation for a class or protocol</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>appledoc: class</string>
+	<string>appledoc class</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
