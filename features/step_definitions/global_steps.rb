@@ -42,6 +42,10 @@ Given /^I have installed the snippet bundle "([^"]*)"$/ do |path|
 end
 
 Given /^I have the existing snippet "([^"]*)"$/ do |snippet_name|
+  # we need a clean slate for deterministic tests
+  Dir[File.join(XcodeSnippets.xcode_snippets_path, "*.codesnippet")].each do |file|
+    FileUtils.rm_rf(file)
+  end
   File.open(File.join(XcodeSnippets.xcode_snippets_path, snippet_name), "w") do |io|
     io.write File.read(File.join(File.dirname(__FILE__), *%w[.. support fixtures example.codesnippet]))
   end
@@ -49,6 +53,10 @@ end
 
 When /^I run xcodesnippets with "([^"]*)"$/ do |command|
   configuration.last_result = XcodeSnippets::Runner.run(command)
+  
+  if configuration.last_result.is_a?(StandardError)
+    raise configuration.last_result
+  end
 end
 
 Then /^the snippet file should be installed to "([^"]*)"$/ do |path|

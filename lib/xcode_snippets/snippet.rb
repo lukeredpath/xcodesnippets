@@ -30,6 +30,10 @@ module XcodeSnippets
       File.basename(@path)
     end
     
+    def metadata
+      @metadata ||= MetaData.from_file(path)
+    end
+    
     def key
       @bundle ? "#{@bundle.name}/#{name}" : name
     end
@@ -40,6 +44,21 @@ module XcodeSnippets
     
     def symlinked?
       symlink && File.exist?(symlink)
+    end
+    
+    class MetaData
+      def initialize(data)
+        @data = data
+      end
+      
+      def self.from_file(path)
+        raise "Could not parse metadata in file #{path}" unless File.exist?(path)
+        new(Plist.parse_xml(path))
+      end
+      
+      def title
+        @data["IDECodeSnippetTitle"]
+      end
     end
   end
 end

@@ -25,6 +25,28 @@ class FakeUUIDGenerator
   end
 end
 
+class FileQuery
+  def initialize(path)
+    @path = path
+  end
+  
+  def exist?
+    File.exist?(@path)
+  end
+  
+  def to_s
+    "<file at #{@path}>"
+  end
+end
+
+def file_at(path)
+  FileQuery.new(path)
+end
+
+def directory(path)
+  FileQuery.new(path)
+end
+
 def setup_testing_environment!
   [SNIPPETS_PATH, XCODE_SNIPPET_PATH].each do |dir|
     FileUtils.rm_rf(dir) && FileUtils.mkdir_p(dir)

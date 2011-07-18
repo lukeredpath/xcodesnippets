@@ -1,5 +1,6 @@
 require 'clamp/command'
 require 'xcode_snippets/snippet_manager'
+require 'xcode_snippets/migrator'
 
 module XcodeSnippets
   class Main < Clamp::Command
@@ -40,7 +41,9 @@ module XcodeSnippets
       option "--skip-confirm", :flag, "Skips confirmation before doing the migration"
       
       def execute
-        
+        snippets = migrator.migrate_snippets_from(XcodeSnippets.xcode_snippets_path, self)
+        migrator.clean_up
+        snippets
       end
     end
     
@@ -55,7 +58,7 @@ module XcodeSnippets
     end
     
     def migrator
-      XcodeSnippets::Migrator.new(manager)
+      @migrator ||= XcodeSnippets::Migrator.new(manager)
     end
 
   end
