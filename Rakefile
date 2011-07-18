@@ -72,3 +72,8 @@ end
 #  - maybe others?
 task :package => :gemspec
 
+desc "Build and deploy the gem to RubyGems.org"
+task :release => :package do
+  gem_path = File.join('pkg', spec.file_name)
+  system "gem push #{gem_path}"
+end
