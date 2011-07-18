@@ -1,4 +1,5 @@
 require 'clamp/command'
+require 'highline/import'
 require 'xcode_snippets/snippet_manager'
 require 'xcode_snippets/migrator'
 
@@ -44,6 +45,18 @@ module XcodeSnippets
         snippets = migrator.migrate_snippets_from(XcodeSnippets.xcode_snippets_path, self)
         migrator.clean_up
         snippets
+      end
+      
+      def migrator_should_proceed_with_migration?(migrator, snippets_to_migrate)
+        prompt = %Q{*********************************************************************
+Warning: this will move #{snippets_to_migrate.count} code snippets under xcodesnippets control:
+*********************************************************************
+
+* #{snippets_to_migrate.map { |s| s.metadata.title}.join("\n* ")}
+
+Continue? (y/n)
+}
+        agree(prompt) unless skip_confirm?
       end
     end
     

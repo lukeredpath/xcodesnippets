@@ -12,4 +12,3 @@ Feature: Migrating existing bundles
     When I run xcodesnippets with "migrate --skip-confirm"
     Then the snippet file should be installed to "tmp/snippets/Default.snippetbundle/appledoc class.codesnippet"
     And the installed snippet files should be symlinked inside "tmp/xcode-snippets"
-
