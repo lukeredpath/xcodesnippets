@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:lukeredpath/rspec-expectations.git
+  revision: 15e2cc34540c296945f603866d0cb6d4c5552197
+  branch: fuzzy-include-matchers
+  specs:
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+
 PATH
   remote: .
   specs:
@@ -34,8 +42,6 @@ GEM
       rspec-expectations (~> 2.6.0)
       rspec-mocks (~> 2.6.0)
     rspec-core (2.6.4)
-    rspec-expectations (2.6.0)
-      diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
@@ -54,12 +60,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  clamp (~> 0.2.1)
   cucumber
-  highline (~> 1.6.2)
-  plist (~> 3.1.0)
   rake
   rspec
+  rspec-expectations!
   ruby-debug19
-  uuidtools (~> 2.1.2)
   xcodesnippets!

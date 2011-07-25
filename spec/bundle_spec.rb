@@ -1,5 +1,11 @@
 require File.join(File.dirname(__FILE__), *%w[spec_helper])
 
+RSpec::Matchers.define :a_snippet_named do |expected|
+  match do |actual|
+    actual.is_a?(XcodeSnippets::Snippet) && (actual.name == expected)
+  end
+end
+
 describe "A bundle" do
   
   before do
@@ -13,8 +19,8 @@ describe "A bundle" do
   
   it "has a snippet for each codesnippet file in the bundle" do
     @bundle.should have(2).snippets
-    @bundle.snippets[0].name.should == "snippet-one.codesnippet"
-    @bundle.snippets[1].name.should == "snippet-two.codesnippet"
+    @bundle.snippets.should include(a_snippet_named "snippet-one.codesnippet")
+    @bundle.snippets.should include(a_snippet_named "snippet-two.codesnippet")
   end
   
   context "adding a snippet" do
