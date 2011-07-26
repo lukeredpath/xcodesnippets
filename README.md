@@ -1,4 +1,4 @@
-# xcodesnippets - a utility for managing Xcode 4 snippet libraries.
+# xcodesnippets - a utility for managing Xcode 4 snippet libraries. [![Build Status](https://secure.travis-ci.org/lukeredpath/xcodesnippets.png)](https://secure.travis-ci.org/lukeredpath/xcodesnippets)
 
 Xcode 4 introduced code snippets; small, re-usable chunks of code that could be inserted using Xcode's native auto-completion system. 
 
